@@ -29,9 +29,9 @@ app.use('/api/tasks', taskRoutes);
 
 //resources
 const resourceRoutes = require('./routes/resources');
-
 app.use('/api/resources', resourceRoutes);
 
+//Events
 const eventRoutes = require('./routes/events');
 app.use('/api/events', eventRoutes);
 

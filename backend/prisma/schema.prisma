@@ -12,9 +12,11 @@ model Task {
   title       String
   description String
   priority    String
-  assignedTo  String
-  createdAt   DateTime @default(now())
+  assignedTo  String?   // Puede ser nulo
+  status      String    @default("Pendiente") // Estado de la tarea
+  createdAt   DateTime  @default(now())
 }
+
 
 model Resource {
   id       Int      @id @default(autoincrement())
