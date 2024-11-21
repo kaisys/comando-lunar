@@ -41,24 +41,6 @@ docker-compose up --build
 Backend: http://localhost:3000
 Frontend: http://localhost:3001
 
-centro-comando-lunar/
-├── backend/
-│   ├── config/
-│   ├── controllers/
-│   ├── prisma/
-│   ├── routes/
-│   ├── services/
-│   └── server.js
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   ├── public/
-│   ├── styles/
-│   └── next.config.js
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-└── README.md
 Estructura del proyecto
 bash
 Copiar código
