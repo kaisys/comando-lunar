@@ -8,13 +8,13 @@ datasource db {
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   title       String
   description String
   priority    String
-  assignedTo  String?   // Puede ser nulo
-  status      String    @default("Pendiente") // Estado de la tarea
-  createdAt   DateTime  @default(now())
+  status      String          @default("Pendiente")
+  createdAt   DateTime        @default(now())
+  assignments TaskAssignment[] // Relación con las asignaciones
 }
 
 
@@ -23,14 +23,45 @@ model Resource {
   type     String   @unique
   level    Float
   critical Boolean
-  events   Event[]  
+  events   Event[]
+  history ResourceHistory[]  
 }
 
 model Event {
   id          Int      @id @default(autoincrement())
   resourceId  Int
+  resource    Resource @relation(fields: [resourceId], references: [id])
   message     String
   createdAt   DateTime @default(now())
-
-  resource    Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
 }
+
+model ResourceHistory {
+  id          Int      @id @default(autoincrement())
+  resourceId  Int
+  level       Float
+  isCritical  Boolean
+  timestamp   DateTime @default(now())
+  resource    Resource @relation(fields: [resourceId], references: [id])
+}
+
+
+
+model Astronaut {
+  id        Int             @id @default(autoincrement())
+  name      String
+  avatarUrl String?          // Opcional para permitir avatares predeterminados
+  role      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  assignments TaskAssignment[] // Relación con las asignaciones
+}
+
+model TaskAssignment {
+  id          Int       @id @default(autoincrement())
+  taskId      Int
+  astronautId Int
+  assignedAt  DateTime  @default(now())
+  task        Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  astronaut   Astronaut @relation(fields: [astronautId], references: [id], onDelete: Cascade)
+}
+

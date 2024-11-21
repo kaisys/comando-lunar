@@ -1,7 +1,9 @@
-require('dotenv').config();
+require('dotenv').config(); // Cargar variables de entorno desde .env
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
-const connectRabbitMQ = require('./config/rabbitmq');
+const { connectRabbitMQ } = require('./config/rabbitmq');
+const startWebSocketServer = require('./services/websocketServer'); // Importa el servidor WebSocket
 
 const app = express();
 
@@ -14,48 +16,42 @@ app.get('/', (req, res) => {
     res.send('¡Backend funcionando!');
 });
 
-// Iniciar servidor
+// Iniciar servidor WebSocket
+startWebSocketServer(); // Inicializa el WebSocket Server
+
+// Iniciar servidor HTTP
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, async () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
+
     // Conectar a RabbitMQ
-    await connectRabbitMQ();
+    try {
+        await connectRabbitMQ(); // Asegúrate de que las variables de entorno están configuradas
+    } catch (error) {
+        console.error('Error conectando a RabbitMQ:', error);
+        process.exit(1); // Finaliza el proceso si no puede conectarse
+    }
 });
 
-// tasks
+// Rutas de tareas
 const taskRoutes = require('./routes/tasks');
-
 app.use('/api/tasks', taskRoutes);
 
-//resources
+// Rutas de recursos
 const resourceRoutes = require('./routes/resources');
 app.use('/api/resources', resourceRoutes);
 
-//Events
+// Rutas de eventos
 const eventRoutes = require('./routes/events');
 app.use('/api/events', eventRoutes);
 
+// Rutas de astronautas
+const astronautsRoutes = require('./routes/astronauts');
+app.use('/api/astronauts', astronautsRoutes);
 
-//Prisma
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+// Rutas de asignaciones de tareas
+const taskAssignmentRoutes = require('./routes/taskAssignments');
+app.use('/api/assignments', taskAssignmentRoutes);
 
-//inicializar datos
-(async () => {
-    const resources = [
-        { type: 'oxygen', level: 75, critical: false },
-        { type: 'energy', level: 60, critical: false },
-        { type: 'food', level: 85, critical: false }
-    ];
-
-    for (const resource of resources) {
-        await prisma.resource.upsert({
-            where: { type: resource.type },
-            update: {},
-            create: resource
-        });
-    }
-
-    console.log('Recursos inicializados en la base de datos');
-})();
-
+// Servir archivos estáticos desde la carpeta public
+app.use('/public', express.static(path.join(__dirname, 'public')));

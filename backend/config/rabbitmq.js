@@ -55,8 +55,24 @@ async function connectRabbitMQ() {
         return { connection, channel };
     } catch (error) {
         console.error('Error conectando a RabbitMQ:', error);
-        process.exit(1);
+        process.exit(1); // Finaliza el proceso si la conexión falla
     }
 }
 
-module.exports = connectRabbitMQ;
+async function sendCriticalEvent(resource) {
+    try {
+        const { channel } = await connectRabbitMQ(); // Asegurar la conexión
+        const queue = 'critical-events';
+        const message = `${resource.type} en nivel crítico (${resource.level}%)`;
+
+        await channel.assertQueue(queue, { durable: true }); // Asegurar la cola antes de enviar
+        channel.sendToQueue(queue, Buffer.from(message), { persistent: true });
+
+        console.log(`Evento crítico enviado a RabbitMQ: ${message}`); // Agrega este log
+    } catch (error) {
+        console.error('Error enviando mensaje a RabbitMQ:', error);
+    }
+}
+
+
+module.exports = { connectRabbitMQ, sendCriticalEvent };

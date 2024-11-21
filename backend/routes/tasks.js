@@ -82,6 +82,8 @@ router.put("/:id/status", async (req, res) => {
 
 });
 
+
+
 // PUT: Actualizar estado de una tarea
 router.put("/:id/status", async (req, res, next) => {
     const { id } = req.params;
@@ -105,5 +107,7 @@ router.put("/:id/status", async (req, res, next) => {
       next(error); // Pasar el error al middleware de manejo de errores
     }
   });
+
+
 
 module.exports = router;
