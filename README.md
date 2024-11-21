@@ -41,7 +41,7 @@ docker-compose up --build
 Backend: http://localhost:3000
 Frontend: http://localhost:3001
 
-Estructura del proyecto
+## Estructura del proyecto
 bash
 Copiar código
 centro-comando-lunar/
@@ -62,7 +62,7 @@ centro-comando-lunar/
 ├── docker-compose.yml
 ├── Dockerfile
 └── README.md
-Uso
+## Uso
 Docker:
 
 El proyecto está configurado con Docker para contenerizar tanto el backend como el frontend, y RabbitMQ. El archivo docker-compose.yml maneja los servicios, incluyendo:
@@ -75,7 +75,7 @@ RabbitMQ se utiliza para gestionar las colas de mensajes, facilitando la comunic
 Prisma y Base de datos:
 
 Prisma se utiliza como ORM para interactuar con la base de datos PostgreSQL. El archivo prisma/schema.prisma define el esquema de la base de datos.
-Endpoints del backend
+## Endpoints del backend
 GET /api/tasks: Obtener todas las tareas.
 
 POST /api/tasks: Crear una nueva tarea.
@@ -90,7 +90,7 @@ POST /api/resources/oxygen: Agregar oxígeno al sistema.
 
 GET /api/events: Obtener todos los eventos.
 
-Contribuir
+## Contribuir
 Si deseas contribuir a este proyecto, sigue estos pasos:
 
 Haz un fork del repositorio.
@@ -98,21 +98,5 @@ Crea una nueva rama (git checkout -b feature/nueva-funcionalidad).
 Realiza tus cambios y haz commit (git commit -am 'Agregada nueva funcionalidad').
 Haz push a tu rama (git push origin feature/nueva-funcionalidad).
 Crea un pull request.
-Licencia
+## Licencia
 Este proyecto está licenciado bajo la MIT License.
-
-markdown
-Copiar código
-
-### ¿Cómo usarlo?
-1. **Crear el archivo README.md**:
-   - Abre tu editor de texto y crea un archivo nuevo llamado `README.md`.
-   - Copia y pega el contenido que te proporcioné en ese archivo.
-   
-2. **Subir el archivo a tu repositorio**:
-   - Luego de pegar el contenido en el archivo `README.md`, usa los comandos de Git para agregarlo, hacer commit y empujarlo al repositorio:
-
-   ```bash
-   git add README.md
-   git commit -m "Añadir archivo README.md"
-   git push origin main
