@@ -94,23 +94,40 @@ Backend: http://localhost:3000
 Frontend: http://localhost:3001
 ## Estructura del proyecto
 centro-comando-lunar/
+
 ├── backend/
-│   ├── config/               # Archivos de configuración (ej., RabbitMQ)
+
+│   ├── config/    # Archivos de configuración (ej., RabbitMQ)
+
 │   ├── controllers/          # Controladores para gestionar la lógica de las rutas
+
 │   ├── prisma/               # Definición del esquema de la base de datos (Prisma)
+
 │   ├── routes/               # Rutas y APIs para interactuar con el backend
+
 │   ├── services/             # Servicios auxiliares (por ejemplo, RabbitMQ, notificaciones)
+
 │   └── server.js             # Punto de entrada del backend
+
 ├── frontend/
 │   ├── components/           # Componentes reutilizables del frontend
+
 │   ├── pages/                # Páginas y vistas principales del frontend
+
 │   ├── public/               # Archivos estáticos accesibles (imágenes, fuentes, etc.)
+
 │   ├── styles/               # Archivos de estilos globales (CSS, SCSS)
+
 │   └── next.config.js        # Configuración específica de Next.js
+
 ├── .gitignore                # Archivos y carpetas a ignorar por Git
+
 ├── docker-compose.yml        # Configuración de servicios Docker
+
 ├── Dockerfile                # Dockerfile para el backend
+
 └── README.md                 # Este archivo
+
 
 ## Uso
 Docker:
